@@ -1,6 +1,5 @@
 import 'package:either_dart/either.dart';
 import 'package:escribo_flutter_anderson/src/core/constants/book_constants.dart';
-import 'package:escribo_flutter_anderson/src/core/constants/path_constants.dart';
 import 'package:escribo_flutter_anderson/src/core/constants/strings.dart';
 import 'package:escribo_flutter_anderson/src/core/exceptions/no_connection_exception.dart';
 import 'package:escribo_flutter_anderson/src/core/models/error_info.dart';
@@ -39,25 +38,6 @@ class APIHandler {
 
       return Left(bookModel);
     }, (errorInfo) => Right(errorInfo));
-  }
-
-  Future<Either<String, ErrorInfo>> downloadBook(BookModel bookModel) async {
-    try {
-      String savePath =
-          '${PathConstants.pathDownloadAndroid}/${bookModel.title}.epub';
-      final response = await dio.download(bookModel.downloadUrl, savePath);
-
-      if (response.statusCode == 200) {
-        return const Left(
-            "${Strings.downloadSuccess} ${PathConstants.pathDownloadAndroid}");
-      } else {
-        return Right(ErrorInfo(message: Strings.downloadError));
-      }
-    } catch (e, stacktrace) {
-      return Right(ErrorInfo(
-          message: Strings.unknownError,
-          stackTrace: StackTrace.fromString("$e\n$stacktrace")));
-    }
   }
 
   Future<Either<T, ErrorInfo>> _fetchData<T>(

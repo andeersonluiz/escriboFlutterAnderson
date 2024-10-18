@@ -20,4 +20,6 @@ class Strings {
       "Erro ao baixar o arquivo, verifique sua conexão";
   static const String insufficientPermissions =
       "Permissões insuficientes para fazer o download";
+
+  static const String emptyFavorites = "Não há favoritos salvos.";
 }

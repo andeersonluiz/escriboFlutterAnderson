@@ -1,0 +1,13 @@
+[33m211078b[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m HEAD@{0}: reset: moving to HEAD~1
+[33m51de763[m HEAD@{1}: rebase (finish): returning to refs/heads/main
+[33m51de763[m HEAD@{2}: rebase (start): checkout HEAD~1
+[33m51de763[m HEAD@{3}: rebase (finish): returning to refs/heads/main
+[33m51de763[m HEAD@{4}: rebase (start): checkout HEAD~1
+[33m51de763[m HEAD@{5}: rebase (finish): returning to refs/heads/main
+[33m51de763[m HEAD@{6}: rebase (start): checkout HEAD~1
+[33m51de763[m HEAD@{7}: rebase (finish): returning to refs/heads/main
+[33m51de763[m HEAD@{8}: rebase (start): checkout HEAD~1
+[33m51de763[m HEAD@{9}: commit (amend): Nova mensagem de commit
+[33mb0cb894[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{10}: commit: Implement domain and data layers, and set up dependency injection
+[33m211078b[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m HEAD@{11}: Branch: renamed refs/heads/master to refs/heads/main
+[33m211078b[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m HEAD@{13}: commit (initial): Initial commit

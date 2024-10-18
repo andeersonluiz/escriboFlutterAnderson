@@ -23,7 +23,7 @@ class PreferencesHandler {
       List<BookModel> bookList = [];
       bool addFavorite = true;
       if (jsonFavoriteBooksOld == null) {
-        bookList.add(book);
+        bookList.add(book.copyWith(isFavorite: true));
       } else {
         bookList = jsonDecode(jsonFavoriteBooksOld)
             .map<BookModel>((book) => BookModel.fromJson(book))
@@ -32,12 +32,10 @@ class PreferencesHandler {
           addFavorite = false;
           bookList.remove(book);
         } else {
-          bookList.add(book);
+          bookList.add(book.copyWith(isFavorite: true));
         }
       }
-
       String jsonFavoriteBooksNew = jsonEncode(bookList);
-
       await _instance.setString(
           PreferencesConstants.favoriteBooksKey, jsonFavoriteBooksNew);
       if (addFavorite) {

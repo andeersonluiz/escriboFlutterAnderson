@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:escribo_flutter_anderson/src/core/constants/path_constants.dart';
 import 'package:escribo_flutter_anderson/src/core/constants/strings.dart';
 import 'package:escribo_flutter_anderson/src/core/exceptions/no_connection_exception.dart';
 import 'package:escribo_flutter_anderson/src/data/datasource/local/preferences_handler.dart';
@@ -160,63 +159,6 @@ void main() {
         result.fold((book) {
           fail('Should not return an success');
         }, (errorInfo) => expect(errorInfo.message, Strings.bookNotFound));
-      });
-    });
-    group('downloadBook(book) tests', () {
-      test('should return a message with success download', () async {
-        when(() => mockDio.get(apiUrl)).thenAnswer((_) async => Response(
-              data: mockJson,
-              statusCode: 200,
-              requestOptions:
-                  RequestOptions(path: "https://escribo.com/books.json"),
-            ));
-        final book = await apiHandler.getBook(1);
-        String savePath =
-            '${PathConstants.pathDownloadAndroid}/${book.left.title}.epub';
-        when(() => mockDio.download(book.left.downloadUrl, savePath))
-            .thenAnswer((_) async => Response(
-                  data: [],
-                  statusCode: 200,
-                  requestOptions: RequestOptions(path: book.left.downloadUrl),
-                ));
-
-        final result = await apiHandler.downloadBook(book.left);
-        result.fold(
-            (stringSuccess) => expect(stringSuccess,
-                "${Strings.downloadSuccess} ${PathConstants.pathDownloadAndroid}"),
-            (errorInfo) => fail('Should not return an error'));
-      });
-      test('should return a message with an error download', () async {
-        final book = booksMock[1];
-        String savePath =
-            '${PathConstants.pathDownloadAndroid}/${book.title}.epub';
-        when(() => mockDio.download(book.downloadUrl, savePath))
-            .thenAnswer((_) async => Response(
-                  data: [],
-                  statusCode: 404,
-                  requestOptions: RequestOptions(path: book.downloadUrl),
-                ));
-
-        final result = await apiHandler.downloadBook(book);
-        result.fold((stringSuccess) => fail('Should not return an success'),
-            (errorInfo) => expect(errorInfo.message, Strings.downloadError));
-      });
-
-      test('should return a message with the error download url invalid',
-          () async {
-        final book = booksMock[1];
-        String savePath =
-            '${PathConstants.pathDownloadAndroid}/${book.title}.epub';
-        when(() => mockDio.download('book.downloadUrl', savePath))
-            .thenAnswer((_) async => Response(
-                  data: [],
-                  statusCode: 404,
-                  requestOptions: RequestOptions(path: book.downloadUrl),
-                ));
-
-        final result = await apiHandler.downloadBook(book);
-        result.fold((stringSuccess) => fail('Should not return an success'),
-            (errorInfo) => expect(errorInfo.message, Strings.unknownError));
       });
     });
   });

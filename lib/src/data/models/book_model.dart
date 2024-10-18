@@ -42,6 +42,7 @@ class BookModel {
       'author': author,
       'cover_url': coverUrl,
       'download_url': downloadUrl,
+      'isFavorite': isFavorite,
     };
   }
 
@@ -51,7 +52,8 @@ class BookModel {
         title: map['title'] as String,
         author: map['author'] as String,
         coverUrl: map['cover_url'] as String,
-        downloadUrl: map['download_url'] as String);
+        downloadUrl: map['download_url'] as String,
+        isFavorite: map['isFavorite'] ?? false);
   }
 
   String toJson() => json.encode(toMap());
