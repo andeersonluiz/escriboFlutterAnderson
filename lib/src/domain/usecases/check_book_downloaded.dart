@@ -1,12 +1,13 @@
 import 'package:escribo_flutter_anderson/src/core/states/data_state.dart';
 import 'package:escribo_flutter_anderson/src/domain/entities/book_entity.dart';
+import 'package:escribo_flutter_anderson/src/domain/entities/epub_info_entity.dart';
 import 'package:escribo_flutter_anderson/src/domain/repositories/book_repository.dart';
 
-class DownloadBookUseCase {
+class CheckBookDownloadedUseCase {
   final BookRepository bookRepository;
-  DownloadBookUseCase(this.bookRepository);
+  CheckBookDownloadedUseCase(this.bookRepository);
 
-  Stream<DataState<String>> execute(Book book) async* {
-    yield* bookRepository.downloadBook(book);
+  Future<DataState<EpubInfo>> execute(Book book) async {
+    return await bookRepository.checkBookDownloaded(book);
   }
 }

@@ -132,34 +132,5 @@ void main() {
         }, (errorInfo) => expect(errorInfo.message, Strings.databaseError));
       });
     });
-
-    group('getBook(id) tests', () {
-      test('should return a book', () async {
-        when(() => mockDio.get(apiUrl)).thenAnswer((_) async => Response(
-              data: mockJson,
-              statusCode: 200,
-              requestOptions:
-                  RequestOptions(path: "https://escribo.com/books.json"),
-            ));
-
-        final result = await apiHandler.getBook(1);
-        result.fold((book) {
-          expect(book.title, 'The Bible of Nature');
-        }, (errorInfo) => fail('Should not return an error'));
-      });
-      test('should return an error book not found', () async {
-        when(() => mockDio.get(apiUrl)).thenAnswer((_) async => Response(
-              data: mockJson,
-              statusCode: 200,
-              requestOptions:
-                  RequestOptions(path: "https://escribo.com/books.json"),
-            ));
-
-        final result = await apiHandler.getBook(58);
-        result.fold((book) {
-          fail('Should not return an success');
-        }, (errorInfo) => expect(errorInfo.message, Strings.bookNotFound));
-      });
-    });
   });
 }

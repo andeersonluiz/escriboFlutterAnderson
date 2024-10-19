@@ -12,6 +12,10 @@ class DataSuccess<T> extends DataState<T> {
   const DataSuccess(T data) : super(data: data);
 }
 
+class DataStream<T> extends DataState<T> {
+  const DataStream(T data) : super(data: data);
+}
+
 class DataFailed<T> extends DataState<T> {
   DataFailed(ErrorInfo error) : super(error: error) {
     // Enviar erro para o sistema de monitoramento de falhas para análise posterior

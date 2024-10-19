@@ -4,10 +4,13 @@ import 'package:escribo_flutter_anderson/src/data/datasource/local/preferences_h
 import 'package:escribo_flutter_anderson/src/data/datasource/remote/api_handler.dart';
 import 'package:escribo_flutter_anderson/src/data/datasource/remote/download_service.dart';
 import 'package:escribo_flutter_anderson/src/data/mappers/book_mapper.dart';
+import 'package:escribo_flutter_anderson/src/data/mappers/epub_info_mapper.dart';
 import 'package:escribo_flutter_anderson/src/data/repositories/book_repository_impl.dart';
 import 'package:escribo_flutter_anderson/src/domain/repositories/book_repository.dart';
+import 'package:escribo_flutter_anderson/src/domain/usecases/check_book_downloaded.dart';
 import 'package:escribo_flutter_anderson/src/domain/usecases/download_book_use_case.dart';
-import 'package:escribo_flutter_anderson/src/domain/usecases/get_book_use_case.dart';
+import 'package:escribo_flutter_anderson/src/domain/usecases/get_downloaded_books_use_case.dart';
+import 'package:escribo_flutter_anderson/src/domain/usecases/save_last_location_epub_use_case.dart';
 import 'package:escribo_flutter_anderson/src/domain/usecases/get_books_use_case.dart';
 import 'package:escribo_flutter_anderson/src/domain/usecases/get_favorite_books_use_case.dart';
 import 'package:escribo_flutter_anderson/src/domain/usecases/update_favorite_use_case.dart';
@@ -31,6 +34,9 @@ class ProviderInjection extends StatelessWidget {
         Provider<BookMapper>(
           create: (_) => BookMapper(),
         ),
+        Provider<EpubInfoMapper>(
+          create: (_) => EpubInfoMapper(),
+        ),
         Provider<DownloadService>(
           create: (_) => DownloadService(),
         ),
@@ -40,6 +46,7 @@ class ProviderInjection extends StatelessWidget {
               apiHandler: context.read<APIHandler>(),
               preferencesHandler: context.read<PreferencesHandler>(),
               bookMapper: context.read<BookMapper>(),
+              epubInfoMapper: context.read<EpubInfoMapper>(),
               downloadService: context.read<DownloadService>(),
             );
           },
@@ -47,18 +54,24 @@ class ProviderInjection extends StatelessWidget {
         Provider<GetBooksUseCase>(
             create: (context) =>
                 GetBooksUseCase(context.read<BookRepository>())),
-        Provider<GetBookUseCase>(
-            create: (context) =>
-                GetBookUseCase(context.read<BookRepository>())),
         Provider<UpdateFavoriteUseCase>(
             create: (context) =>
                 UpdateFavoriteUseCase(context.read<BookRepository>())),
         Provider<DownloadBookUseCase>(
             create: (context) =>
                 DownloadBookUseCase(context.read<BookRepository>())),
+        Provider<SaveLastLocationEpubUseCase>(
+            create: (context) =>
+                SaveLastLocationEpubUseCase(context.read<BookRepository>())),
+        Provider<CheckBookDownloadedUseCase>(
+            create: (context) =>
+                CheckBookDownloadedUseCase(context.read<BookRepository>())),
         Provider<GetFavoritesBooksUseCase>(
             create: (context) =>
                 GetFavoritesBooksUseCase(context.read<BookRepository>())),
+        Provider<GetDownloadedBooksUseCase>(
+            create: (context) =>
+                GetDownloadedBooksUseCase(context.read<BookRepository>())),
       ],
       child: Builder(builder: (context) {
         return FutureBuilder(

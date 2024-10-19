@@ -1,8 +1,9 @@
 import 'package:escribo_flutter_anderson/injection.dart';
 import 'package:escribo_flutter_anderson/src/domain/usecases/get_books_use_case.dart';
 import 'package:escribo_flutter_anderson/src/domain/usecases/get_favorite_books_use_case.dart';
-import 'package:escribo_flutter_anderson/src/presenter/pages/home_page.dart';
+import 'package:escribo_flutter_anderson/src/presenter/pages/home/home_page.dart';
 import 'package:escribo_flutter_anderson/src/presenter/state_managment/bloc/books/books_bloc.dart';
+import 'package:escribo_flutter_anderson/src/presenter/state_managment/value_notifier/downloaded_books_notifier.dart';
 import 'package:escribo_flutter_anderson/src/presenter/state_managment/value_notifier/selected_button_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
                 context.read<GetFavoritesBooksUseCase>())),
         Provider<SelectedButtonNotifier>(
           create: (context) => SelectedButtonNotifier(),
+        ),
+        Provider<DownloadedBooksNotifier>(
+          create: (context) => DownloadedBooksNotifier(),
         ),
       ],
       child: MaterialApp(

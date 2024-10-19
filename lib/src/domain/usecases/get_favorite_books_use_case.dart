@@ -6,7 +6,7 @@ class GetFavoritesBooksUseCase {
   final BookRepository bookRepository;
   GetFavoritesBooksUseCase(this.bookRepository);
 
-  Future<DataState<List<Book>>> execute() async {
-    return await bookRepository.getFavoritesBooks();
+  DataState<List<Book>> execute() {
+    return bookRepository.getFavoritesBooks();
   }
 }

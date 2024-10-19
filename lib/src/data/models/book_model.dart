@@ -8,6 +8,7 @@ class BookModel {
   final String coverUrl;
   final String downloadUrl;
   final bool isFavorite;
+  final bool isDownloaded;
   BookModel({
     required this.id,
     required this.title,
@@ -15,6 +16,7 @@ class BookModel {
     required this.coverUrl,
     required this.downloadUrl,
     this.isFavorite = false,
+    this.isDownloaded = false,
   });
 
   BookModel copyWith({
@@ -24,6 +26,7 @@ class BookModel {
     String? coverUrl,
     String? downloadUrl,
     bool? isFavorite,
+    bool? isDownloaded,
   }) {
     return BookModel(
       id: id ?? this.id,
@@ -32,6 +35,7 @@ class BookModel {
       coverUrl: coverUrl ?? this.coverUrl,
       downloadUrl: downloadUrl ?? this.downloadUrl,
       isFavorite: isFavorite ?? this.isFavorite,
+      isDownloaded: isDownloaded ?? this.isDownloaded,
     );
   }
 
@@ -43,6 +47,7 @@ class BookModel {
       'cover_url': coverUrl,
       'download_url': downloadUrl,
       'isFavorite': isFavorite,
+      'isDownloaded': isDownloaded,
     };
   }
 
@@ -53,7 +58,8 @@ class BookModel {
         author: map['author'] as String,
         coverUrl: map['cover_url'] as String,
         downloadUrl: map['download_url'] as String,
-        isFavorite: map['isFavorite'] ?? false);
+        isFavorite: map['isFavorite'] ?? false,
+        isDownloaded: map['isDownloaded'] ?? false);
   }
 
   String toJson() => json.encode(toMap());
@@ -63,7 +69,7 @@ class BookModel {
 
   @override
   String toString() {
-    return 'BookModel(id: $id, title: $title, author: $author, coverUrl: $coverUrl, downloadUrl: $downloadUrl, isFavorite: $isFavorite)';
+    return 'BookModel(id: $id, title: $title, author: $author, coverUrl: $coverUrl, downloadUrl: $downloadUrl, isFavorite: $isFavorite, isFavorite: $isDownloaded)';
   }
 
   @override

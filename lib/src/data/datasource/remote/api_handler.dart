@@ -17,27 +17,8 @@ class APIHandler {
     return await _fetchData(
         fromJson: (books) => books
             .map<BookModel>((jsonItem) => BookModel.fromMap(jsonItem))
+            .toSet()
             .toList());
-  }
-
-  Future<Either<BookModel, ErrorInfo>> getBook(int id) async {
-    final result = await _fetchData(
-        fromJson: (books) => books
-            .map<BookModel>((jsonItem) => BookModel.fromMap(jsonItem))
-            .toList());
-
-    return result.fold((book) {
-      BookModel bookModel = book.firstWhere(
-        (book) => book.id == id,
-        orElse: () => BookConstants.defaultBookModel,
-      );
-
-      if (bookModel == BookConstants.defaultBookModel) {
-        return Right(ErrorInfo(message: Strings.bookNotFound));
-      }
-
-      return Left(bookModel);
-    }, (errorInfo) => Right(errorInfo));
   }
 
   Future<Either<T, ErrorInfo>> _fetchData<T>(

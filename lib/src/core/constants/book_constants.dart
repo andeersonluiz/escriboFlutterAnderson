@@ -11,5 +11,6 @@ class BookConstants {
       author: '',
       coverUrl: '',
       downloadUrl: '',
-      isFavorite: false);
+      isFavorite: false,
+      isDownloaded: false);
 }

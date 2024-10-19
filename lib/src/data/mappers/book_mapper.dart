@@ -11,7 +11,8 @@ class BookMapper extends Mapper<Book, BookModel> {
         author: entity.author,
         coverUrl: entity.coverUrl,
         downloadUrl: entity.downloadUrl,
-        isFavorite: entity.isFavorite);
+        isFavorite: entity.isFavorite,
+        isDownloaded: entity.isDownloaded);
   }
 
   @override
@@ -22,6 +23,7 @@ class BookMapper extends Mapper<Book, BookModel> {
         author: model.author,
         coverUrl: model.coverUrl,
         downloadUrl: model.downloadUrl,
-        isFavorite: model.isFavorite);
+        isFavorite: model.isFavorite,
+        isDownloaded: model.isDownloaded);
   }
 }

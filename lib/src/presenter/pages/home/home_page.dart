@@ -1,7 +1,7 @@
 import 'package:escribo_flutter_anderson/src/presenter/components/custom_app_bar_component.dart';
-import 'package:escribo_flutter_anderson/src/presenter/pages/widgets/book_selection_button_widget.dart';
-import 'package:escribo_flutter_anderson/src/presenter/pages/widgets/error_grid_books_widget.dart';
-import 'package:escribo_flutter_anderson/src/presenter/pages/widgets/grid_books_widget.dart';
+import 'package:escribo_flutter_anderson/src/presenter/pages/home/widgets/book_selection_button_widget.dart';
+import 'package:escribo_flutter_anderson/src/presenter/pages/home/widgets/error_grid_books_widget.dart';
+import 'package:escribo_flutter_anderson/src/presenter/pages/home/widgets/grid_books_widget.dart';
 import 'package:escribo_flutter_anderson/src/presenter/state_managment/bloc/books/books_bloc.dart';
 import 'package:escribo_flutter_anderson/src/presenter/state_managment/bloc/books/books_event.dart';
 import 'package:escribo_flutter_anderson/src/presenter/state_managment/value_notifier/selected_button_notifier.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-import '../state_managment/bloc/books/books_state.dart';
+import '../../state_managment/bloc/books/books_state.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

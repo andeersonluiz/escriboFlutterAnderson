@@ -5,6 +5,7 @@ import 'package:escribo_flutter_anderson/src/core/constants/preferences_constant
 import 'package:escribo_flutter_anderson/src/core/constants/strings.dart';
 import 'package:escribo_flutter_anderson/src/core/models/error_info.dart';
 import 'package:escribo_flutter_anderson/src/data/models/book_model.dart';
+import 'package:escribo_flutter_anderson/src/data/models/epub_info_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesHandler {
@@ -50,13 +51,84 @@ class PreferencesHandler {
     }
   }
 
-  Future<Either<List<BookModel>, ErrorInfo>> getFavoritesBooks() async {
+  Either<List<BookModel>, ErrorInfo> getFavoritesBooks() {
     try {
       String? jsonFavoriteBooksOld =
           _instance.getString(PreferencesConstants.favoriteBooksKey);
       List<BookModel> bookList = [];
       if (jsonFavoriteBooksOld != null) {
         bookList = jsonDecode(jsonFavoriteBooksOld)
+            .map<BookModel>((book) => BookModel.fromJson(book))
+            .toList();
+      }
+      return Left(bookList);
+    } catch (e, stacktrace) {
+      return Right(ErrorInfo(
+          message: Strings.preferencesError,
+          stackTrace: StackTrace.fromString("$e\n$stacktrace")));
+    }
+  }
+
+  Future<Either<bool, ErrorInfo>> saveLastLocationEpub(
+      EpubInfoModel epubInfoModel) async {
+    try {
+      await _instance.setString(
+          "${PreferencesConstants.lastLocationEpubKey}_${epubInfoModel.bookId}",
+          jsonEncode(epubInfoModel.toJson()));
+      return const Left(true);
+    } catch (e, stacktrace) {
+      return Right(ErrorInfo(
+          message: '', stackTrace: StackTrace.fromString("$e\n$stacktrace")));
+    }
+  }
+
+  Either<Map<String, dynamic>, ErrorInfo> getLastLocationEpub(int bookId) {
+    try {
+      String? epubInfoJson = _instance
+          .getString("${PreferencesConstants.lastLocationEpubKey}_$bookId");
+
+      if (epubInfoJson == null) {
+        return const Left({});
+      } else {
+        final String decoded = jsonDecode(epubInfoJson);
+        final EpubInfoModel epubInfo = EpubInfoModel.fromJson(decoded);
+        return Left(epubInfo.lastLocation);
+      }
+    } catch (e, stacktrace) {
+      return Right(ErrorInfo(
+          message: '', stackTrace: StackTrace.fromString("$e\n$stacktrace")));
+    }
+  }
+
+  Future<Either<bool, ErrorInfo>> saveDownloadedBook(BookModel book) async {
+    try {
+      String? jsonDownloadBooksOld =
+          _instance.getString(PreferencesConstants.downloadBookListKey);
+      List<BookModel> bookList = [];
+      if (jsonDownloadBooksOld != null) {
+        bookList = jsonDecode(jsonDownloadBooksOld)
+            .map<BookModel>((book) => BookModel.fromJson(book))
+            .toList();
+      }
+      bookList.add(book);
+      String jsonDownloadBooksNew = jsonEncode(bookList);
+      await _instance.setString(
+          PreferencesConstants.downloadBookListKey, jsonDownloadBooksNew);
+
+      return const Left(true);
+    } catch (e, stacktrace) {
+      return Right(ErrorInfo(
+          message: '', stackTrace: StackTrace.fromString("$e\n$stacktrace")));
+    }
+  }
+
+  Either<List<BookModel>, ErrorInfo> getDownloadedBooks() {
+    try {
+      String? jsonDownloadBooksOld =
+          _instance.getString(PreferencesConstants.downloadBookListKey);
+      List<BookModel> bookList = [];
+      if (jsonDownloadBooksOld != null) {
+        bookList = jsonDecode(jsonDownloadBooksOld)
             .map<BookModel>((book) => BookModel.fromJson(book))
             .toList();
       }

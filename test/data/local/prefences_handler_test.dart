@@ -100,7 +100,7 @@ void main() {
         await preferencesHandlerMock.updateFavorite(booksMock[1]);
         await preferencesHandlerMock.updateFavorite(booksMock[0]);
 
-        final favoriteBooks = await preferencesHandlerMock.getFavoritesBooks();
+        final favoriteBooks = preferencesHandlerMock.getFavoritesBooks();
         favoriteBooks.fold((booksResult) {
           expect(booksResult.length, 2);
           expect(booksResult[0], booksMock[1]);
@@ -116,7 +116,7 @@ void main() {
         await preferencesHandlerMock.updateFavorite(booksMock[1]);
         await preferencesHandlerMock.updateFavorite(booksMock[0]);
 
-        final favoriteBooks = await preferencesHandlerMock.getFavoritesBooks();
+        final favoriteBooks = preferencesHandlerMock.getFavoritesBooks();
         favoriteBooks.fold((booksResult) {
           expect(booksResult.length, 0);
         }, (errorInfo) => fail('Should not return an error'));
@@ -128,7 +128,7 @@ void main() {
         SharedPreferences instanceMock = await SharedPreferences.getInstance();
         await preferencesHandlerMock.init(instanceMock);
 
-        final result = await preferencesHandlerMock.getFavoritesBooks();
+        final result = preferencesHandlerMock.getFavoritesBooks();
 
         result.fold((message) {
           fail('Should not return an success');

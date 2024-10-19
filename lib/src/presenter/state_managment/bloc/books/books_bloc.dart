@@ -32,7 +32,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
       LoadBooksFavoritesEvent event, Emitter<BooksState> emit) async {
     emit(const LoadingBooks());
 
-    final result = await _getFavoritesBooksUseCase.execute();
+    final result = _getFavoritesBooksUseCase.execute();
     if (result is DataSuccess) {
       if (result.data!.isEmpty) {
         return emit(const EmptyBooks(msg: Strings.emptyFavorites));
